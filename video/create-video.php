@@ -142,6 +142,31 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
             }
         }
     });
+    document.getElementById("convertButton").addEventListener("click", function() {
+            const youtubeUrl = document.getElementById("youtubeUrl").value;
+            let videoId = youtubeUrl.split("v=")[1];
+            const ampersandPosition = videoId ? videoId.indexOf("&") : -1;
+
+            if (ampersandPosition !== -1) {
+                videoId = videoId.substring(0, ampersandPosition);
+            }
+
+            if (videoId) {
+                const embedUrl = "https://www.youtube.com/embed/" + videoId;
+                document.getElementById("embedUrl").value = embedUrl;
+                document.getElementById("videoPreview").src = embedUrl;
+            } else {
+                alert("Invalid YouTube URL. Please try again.");
+            }
+        });
+
+        document.getElementById("videoForm").addEventListener("submit", function(event) {
+            const embedUrl = document.getElementById("embedUrl").value;
+            if (!embedUrl) {
+                event.preventDefault();
+                alert("Please convert the YouTube URL to an embed URL before submitting the form.");
+            }
+        });
 
     select.addEventListener("change", function() {
         const selectedOption = select.options[select.selectedIndex];
